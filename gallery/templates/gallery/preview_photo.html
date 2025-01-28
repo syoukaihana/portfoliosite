@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>アップロードされた画像のプレビュー</h2>
+  <img src="{{ uploaded_photo.url }}" alt="Uploaded Image" style="max-width: 300px;">
+  <a href="{% url 'gallery' %}">戻る</a>
+{% endblock %}

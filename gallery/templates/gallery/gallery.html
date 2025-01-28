@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYOUKAIHANA</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'gallery/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@200;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="{% url 'gallery' %}" class="logo">Photo Gallery</a>
+            
+            <!-- ハンバーガーメニューボタン -->
+            <button class="hamburger" aria-label="メニュー">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- ナビゲーションメニュー -->
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="{% url 'gallery' %}"><i class="fas fa-home"></i><span>Home</span></a></li>
+                    <li><a href="{% url 'profile' %}"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li><a href="{% url 'contact' %}"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+                    <li><a href="{% url 'upload_photo' %}"><i class="fas fa-upload"></i><span>Upload</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="gallery-section">
+            <h1 class="gallery-title">Our Products</h1>
+            <form method="GET" action="" class="search-form">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search for products...">
+                <button type="submit">Search</button>
+            </form>
+            <div class="gallery-container">
+                {% for photo in photos %}
+                    <div class="gallery-item">
+                        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="product-image">
+                        <div class="product-info">
+                            <h2>{{ photo.title }}</h2>
+                            <p>{{ photo.description }}</p>
+                            <div class="action-buttons">
+                                {% if photo.is_downloadable %}
+                                    <a href="{{ photo.image.url }}" download class="btn">Download</a>
+                                {% endif %}
+                                <a href="https://twitter.com/intent/tweet?url={{ photo.image.url }}" target="_blank" class="btn">Share on X</a>
+                                {% if user.is_superuser %}
+                                <a href="{% url 'edit_photo' photo.id %}" class="btn admin-btn">編集</a>
+                                <a href="{% url 'delete_photo' photo.id %}" class="btn admin-btn">削除</a>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No products available.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'gallery/script.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

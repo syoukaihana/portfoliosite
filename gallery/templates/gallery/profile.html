@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'gallery/profile_styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="{% url 'gallery' %}">ホーム</a></li>
+                    <li><a href="{% url 'profile' %}" class="active">プロフィール</a></li>
+                    <li><a href="{% url 'contact' %}">お問い合わせ</a></li>
+                </ul>
+            </nav>
+            <!-- header の前に追加 -->
+  
+            <h1>SELF-INTRODUCTION</h1>
+            <!-- navigation の下、h1 の前に以下のコードを追加 -->
+<div class="profile-image">
+    <img src="{% static 'gallery/img_0823.jpg' %}" alt="プロフィール画像">
+</div>
+        </header>
+
+        <main>
+            <section class="profile-section">
+                <h2>PROFILE</h2>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="label">nema</span>
+                        <span class="value">Kurakata Asahi.</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">years-old</span>
+                        <span class="value">17歳</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hobby-section">
+                <h2>HOBBY</h2>
+                <div class="hobby-grid">
+                    <div class="hobby-item">スキー</div>
+                    <div class="hobby-item">写真</div>
+                    <div class="hobby-item">ゲーム</div>
+                    <div class="hobby-item">旅行</div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 My Profile</p>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // スライドショーの制御（既存のコード）
+    const images = document.querySelectorAll('.slideshow-images img');
+    let currentIndex = 0;
+
+    // 最初の画像を表示
+    images[0].classList.add('active');
+
+    // スライドショーの関数
+    function nextSlide() {
+        images[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].classList.add('active');
+    }
+
+    setInterval(nextSlide, 3000);
+
+    // スクロールアニメーションの制御
+    const container = document.querySelector('.container');
+    let ticking = false;
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                const scrollPos = window.scrollY;
+                const windowHeight = window.innerHeight;
+                
+                // スクロール位置に応じてクラスを追加/削除
+                if (scrollPos > windowHeight * 0.1) {
+                    document.body.classList.add('scrolled');
+                } else {
+                    document.body.classList.remove('scrolled');
+                }
+
+                // パララックス効果
+                const slideshow = document.querySelector('.slideshow');
+                const parallaxSpeed = 0.5;
+                slideshow.style.transform = `translateY(${scrollPos * parallaxSpeed}px)`;
+
+                ticking = false;
+            });
+
+            ticking = true;
+        }
+    });
+});
+        </script>
+</body>
+</html>

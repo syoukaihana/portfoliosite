@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - SYOUKAIHANA</title>
+    <link rel="stylesheet" href="{% static 'gallery/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'gallery/contact.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@200;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="{% url 'gallery' %}" class="logo">SYOUKAIHANA</a>
+            
+            <button class="hamburger" aria-label="メニュー">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="{% url 'gallery' %}"><i class="fas fa-home"></i><span>Home</span></a></li>
+                    <li><a href="{% url 'profile' %}"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li><a href="{% url 'contact' %}"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+                    <li><a href="{% url 'upload_photo' %}"><i class="fas fa-upload"></i><span>Upload</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contact-main">
+        <section class="contact-section">
+            <h1 class="contact-title">Contact Us</h1>
+            <form method="POST" class="contact-form">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error-message">
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="submit-btn">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="{% static 'gallery/script.js' %}"></script>
+</body>
+</html>

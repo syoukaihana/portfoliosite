@@ -1,0 +1,12 @@
+<!-- gallery/templates/gallery/photo_list.html -->
+{% for photo in photos %}
+    <div class="photo">
+        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" style="width:300px; height:auto;">
+        <h3>{{ photo.title }}</h3>
+    </div>
+{% endfor %}
+{% if photo.is_downloadable %}
+    <a href="{{ photo.image.url }}" download>ダウンロード</a>
+{% else %}
+    <p>ダウンロード不可</p>
+{% endif %}

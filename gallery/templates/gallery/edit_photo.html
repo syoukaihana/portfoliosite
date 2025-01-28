@@ -1,0 +1,17 @@
+<!-- templates/gallery/edit_photo.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Photo</title>
+</head>
+<body>
+    <h1>Edit Photo: {{ photo.title }}</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+    <a href="{% url 'gallery' %}">Cancel</a>
+</body>
+</html>

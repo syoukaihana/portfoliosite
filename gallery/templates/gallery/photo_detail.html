@@ -1,0 +1,18 @@
+<!-- templates/gallery/photo_detail.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ photo.title }}の詳細</title>
+</head>
+<body>
+    <h1>{{ photo.title }}</h1>
+    <div>
+        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" width="300">
+        <p>{{ photo.description }}</p>
+        <p>カテゴリー: {{ photo.category }}</p>
+        <p>アップロード日: {{ photo.upload_date }}</p>
+    </div>
+    <a href="{% url 'gallery' %}">ギャラリーに戻る</a>
+</body>
+</html>
